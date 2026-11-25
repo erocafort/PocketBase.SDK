@@ -1,0 +1,51 @@
+name: Publish NuGet
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_NOLOGO: true
+      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+            11.0.x
+
+      - name: Restore
+        run: dotnet restore PocketBaseNet.slnx
+
+      - name: Build
+        run: dotnet build PocketBaseNet.slnx -c Release --no-restore
+
+      - name: Test (net10)
+        run: dotnet test PocketBaseNet.Tests/PocketBaseNet.Tests.csproj -c Release -f net10.0 --no-build
+
+      - name: Pack
+        run: dotnet pack PocketBaseNet.slnx -c Release --no-build
+
+      - name: Push PocketBaseNet.Abstractions
+        run: dotnet nuget push PocketBaseNet.Abstractions/bin/Release/PocketBaseNet.Abstractions.*.nupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: Push PocketBaseNet
+        run: dotnet nuget push PocketBaseNet/bin/Release/PocketBaseNet.*.nupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: Push PocketBaseNet.DependencyInjection
+        run: dotnet nuget push PocketBaseNet.DependencyInjection/bin/Release/PocketBaseNet.DependencyInjection.*.nupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
