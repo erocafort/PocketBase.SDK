@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>PocketBaseNet.Abstractions</AssemblyName>
+    <RootNamespace>PocketBaseNet.Abstractions</RootNamespace>
+    <PackageId>PocketBaseNet.Abstractions</PackageId>
+    <Title>PocketBaseNet.Abstractions</Title>
+    <Description>Abstractions, DTOs and options for PocketBaseNet.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
+</Project>

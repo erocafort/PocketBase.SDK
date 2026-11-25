@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="PocketBaseNet.Abstractions/PocketBaseNet.Abstractions.csproj" />
+  <Project Path="PocketBaseNet.DependencyInjection/PocketBaseNet.DependencyInjection.csproj" />
+  <Project Path="PocketBaseNet.Realtime/PocketBaseNet.Realtime.csproj" />
+  <Project Path="PocketBaseNet.Tests/PocketBaseNet.Tests.csproj" />
+  <Project Path="PocketBaseNet/PocketBaseNet.csproj" />
+</Solution>
