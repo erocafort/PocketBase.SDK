@@ -48,7 +48,7 @@ La solución es `PocketBaseNet.slnx` (formato .slnx).
 | `PocketBaseNet.Tests` | Tests con xUnit. |
 
 Empaquetado actual:
-- Se generan paquetes para `PocketBaseNet`, `PocketBaseNet.Abstractions` y `PocketBaseNet.DependencyInjection`.
+- Se generan paquetes para `PocketBase.SDK`, `PocketBase.SDK.Abstractions` y `PocketBase.SDK.DependencyInjection`.
 - `PocketBaseNet.Realtime` está marcado como no empaquetable (`IsPackable=false`) porque sigue vacío.
 
 `Directory.Build.props` define:

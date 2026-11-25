@@ -2,8 +2,8 @@
   <PropertyGroup>
     <AssemblyName>PocketBaseNet.Abstractions</AssemblyName>
     <RootNamespace>PocketBaseNet.Abstractions</RootNamespace>
-    <PackageId>PocketBaseNet.Abstractions</PackageId>
-    <Title>PocketBaseNet.Abstractions</Title>
+    <PackageId>PocketBase.SDK.Abstractions</PackageId>
+    <Title>PocketBase.SDK.Abstractions</Title>
     <Description>Abstractions, DTOs and options for PocketBaseNet.</Description>
   </PropertyGroup>
 

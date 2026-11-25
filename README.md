@@ -4,9 +4,9 @@ PocketBaseNet is a .NET SDK for [PocketBase](https://pocketbase.io/) focused on 
 
 ## Packages
 
-- `PocketBaseNet` - core client and services
-- `PocketBaseNet.Abstractions` - interfaces, DTOs and option types
-- `PocketBaseNet.DependencyInjection` - DI registration helpers
+- `PocketBase.SDK` - core client and services
+- `PocketBase.SDK.Abstractions` - interfaces, DTOs and option types
+- `PocketBase.SDK.DependencyInjection` - DI registration helpers
 
 ## Targets
 

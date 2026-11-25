@@ -2,8 +2,8 @@
   <PropertyGroup>
     <AssemblyName>PocketBaseNet.DependencyInjection</AssemblyName>
     <RootNamespace>PocketBaseNet.DependencyInjection</RootNamespace>
-    <PackageId>PocketBaseNet.DependencyInjection</PackageId>
-    <Title>PocketBaseNet.DependencyInjection</Title>
+    <PackageId>PocketBase.SDK.DependencyInjection</PackageId>
+    <Title>PocketBase.SDK.DependencyInjection</Title>
     <Description>Dependency injection helpers for PocketBaseNet.</Description>
   </PropertyGroup>
 

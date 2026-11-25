@@ -2,8 +2,8 @@
   <PropertyGroup>
     <AssemblyName>PocketBaseNet</AssemblyName>
     <RootNamespace>PocketBaseNet</RootNamespace>
-    <PackageId>PocketBaseNet</PackageId>
-    <Title>PocketBaseNet</Title>
+    <PackageId>PocketBase.SDK</PackageId>
+    <Title>PocketBase.SDK</Title>
     <Description>.NET client for PocketBase (core client and services).</Description>
   </PropertyGroup>
 
