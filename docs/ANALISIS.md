@@ -1,4 +1,4 @@
-# PocketBaseNet: análisis y decisiones
+# PocketBase.SDK: análisis y decisiones
 
 Documento de referencia del proyecto. Mantenerlo actualizado al cerrar cada fase.
 
@@ -37,19 +37,19 @@ Documento de referencia del proyecto. Mantenerlo actualizado al cerrar cada fase
 
 ### Estructura de la solución
 
-La solución es `PocketBaseNet.slnx` (formato .slnx).
+La solución es `PocketBase.SDK.slnx` (formato .slnx).
 
 | Proyecto | Contenido |
 |---|---|
-| `PocketBaseNet.Abstractions` | Interfaces, DTOs, opciones, `RecordModel`, `PocketBaseException`. Sin dependencias. |
-| `PocketBaseNet` | Implementación: cliente, transport, servicios y herramientas portadas. |
-| `PocketBaseNet.DependencyInjection` | `AddPocketBase(...)`. |
-| `PocketBaseNet.Realtime` | **Vacío.** El realtime vive en el núcleo porque `RecordService` lo necesita (subscribe, OAuth2). Pendiente de decidir si se elimina. |
-| `PocketBaseNet.Tests` | Tests con xUnit. |
+| `PocketBase.SDK.Abstractions` | Interfaces, DTOs, opciones, `RecordModel`, `PocketBaseException`. Sin dependencias. |
+| `PocketBase.SDK` | Implementación: cliente, transport, servicios y herramientas portadas. |
+| `PocketBase.SDK.DependencyInjection` | `AddPocketBase(...)`. |
+| `PocketBase.SDK.Realtime` | **Vacío.** El realtime vive en el núcleo porque `RecordService` lo necesita (subscribe, OAuth2). Pendiente de decidir si se elimina. |
+| `PocketBase.SDK.Tests` | Tests con xUnit. |
 
 Empaquetado actual:
 - Se generan paquetes para `PocketBase.SDK`, `PocketBase.SDK.Abstractions` y `PocketBase.SDK.DependencyInjection`.
-- `PocketBaseNet.Realtime` está marcado como no empaquetable (`IsPackable=false`) porque sigue vacío.
+- `PocketBase.SDK.Realtime` está marcado como no empaquetable (`IsPackable=false`) porque sigue vacío.
 
 `Directory.Build.props` define:
 - `TargetFrameworks`: net8.0, net9.0, net10.0 y net11.0.
@@ -219,10 +219,10 @@ Pendiente de tipado fino (desviación actual): sub-DTOs de configuración de col
 - **Última ejecución con integración real opcional:** `LivePocketBaseIntegrationTests` (1 test), 0 fallos, en net10.0. Incluye auth, cookie auth roundtrip (`ExportToCookie`/`LoadFromCookie` + `AuthRefreshAsync`) y cobertura de endpoints fase 4.
 - **Realtime:** batería ejecutada 25 veces seguidas sin fallos, para detectar tests inestables.
 - **Comandos:**
-  - `dotnet build PocketBaseNet.slnx`
-  - `dotnet test PocketBaseNet.Tests -f net10.0`
-  - `dotnet test PocketBaseNet.Tests -f net10.0 --filter "FullyQualifiedName~LivePocketBaseIntegrationTests"` (con `PB_URL`, `PB_EMAIL`, `PB_PASSWORD`)
-  - `dotnet pack PocketBaseNet.slnx -c Release`
+  - `dotnet build PocketBase.SDK.slnx`
+  - `dotnet test PocketBase.SDK.Tests -f net10.0`
+  - `dotnet test PocketBase.SDK.Tests -f net10.0 --filter "FullyQualifiedName~LivePocketBaseIntegrationTests"` (con `PB_URL`, `PB_EMAIL`, `PB_PASSWORD`)
+  - `dotnet pack PocketBase.SDK.slnx -c Release`
 
 ## 9. Matriz de integración real por endpoint (PocketBase local)
 

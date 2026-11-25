@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>PocketBase.SDK</AssemblyName>
+    <RootNamespace>PocketBase.SDK</RootNamespace>
+    <PackageId>PocketBase.SDK</PackageId>
+    <Title>PocketBase.SDK</Title>
+    <Description>.NET client for PocketBase (core client and services).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="PocketBase.SDK.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PocketBase.SDK.Abstractions\PocketBase.SDK.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
+</Project>

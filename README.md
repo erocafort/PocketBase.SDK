@@ -1,6 +1,6 @@
-# PocketBaseNet
+# PocketBase.SDK
 
-PocketBaseNet is a .NET SDK for [PocketBase](https://pocketbase.io/) focused on API parity with the official JS and Dart SDKs.
+PocketBase.SDK is a .NET SDK for [PocketBase](https://pocketbase.io/) focused on API parity with the official JS and Dart SDKs.
 
 ## Packages
 
@@ -18,9 +18,9 @@ PocketBaseNet is a .NET SDK for [PocketBase](https://pocketbase.io/) focused on 
 ## Quick start
 
 ```csharp
-using PocketBaseNet;
+using PocketBase.SDK;
 
-var pb = PocketBaseClient.Create(new PocketBaseNet.Abstractions.PocketBaseOptions
+var pb = PocketBaseClient.Create(new PocketBase.SDK.Abstractions.PocketBaseOptions
 {
     BaseUrl = "http://127.0.0.1:8090"
 });

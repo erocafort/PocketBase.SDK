@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>PocketBase.SDK.Realtime</AssemblyName>
+    <RootNamespace>PocketBase.SDK.Realtime</RootNamespace>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PocketBase.SDK.Abstractions\PocketBase.SDK.Abstractions.csproj" />
+    <ProjectReference Include="..\PocketBase.SDK\PocketBase.SDK.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="PocketBase.SDK.Abstractions/PocketBase.SDK.Abstractions.csproj" />
+  <Project Path="PocketBase.SDK.DependencyInjection/PocketBase.SDK.DependencyInjection.csproj" />
+  <Project Path="PocketBase.SDK.Realtime/PocketBase.SDK.Realtime.csproj" />
+  <Project Path="PocketBase.SDK.Tests/PocketBase.SDK.Tests.csproj" />
+  <Project Path="PocketBase.SDK/PocketBase.SDK.csproj" />
+</Solution>
