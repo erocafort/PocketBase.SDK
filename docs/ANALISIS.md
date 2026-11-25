@@ -2,7 +2,7 @@
 
 Documento de referencia del proyecto. Mantenerlo actualizado al cerrar cada fase.
 
-- **Última actualización:** 2026-11-25, cierre de fase 6: integración live opcional + empaquetado NuGet con metadatos finales + publicación por NuGet Trusted Publishing (OIDC).
+- **Última actualización:** 2026-11-25, cierre de fase 6: integración live opcional + empaquetado NuGet con metadatos finales + publicación por NuGet Trusted Publishing (OIDC). Revisión estática de API frente a las referencias (sección 10).
 - **Estado de verificación:**
   - Tests unitarios con servidores simulados (`HttpMessageHandler` falsos).
   - Test de integración real opcional (`LivePocketBaseIntegrationTests`) ejecutado contra PocketBase v0.42.3 local.
@@ -195,6 +195,7 @@ Pendiente de tipado fino (desviación actual): sub-DTOs de configuración de col
     - No envía `Authorization` en el GET, igual que `EventSource`. La autorización ocurre en el POST de suscripciones, según la documentación.
 14. **`CollectionModel.Options` se expone como `JsonObject`** (no con sub-DTOs tipados `*Config` como en Dart). Se priorizó cubrir todos los endpoints/métodos de fase 4 sin bloquear por el gran árbol de tipos de configuración.
 15. **`SettingsService` usa `JsonObject` en `GetAll`/`Update`**, en vez de clases fuertemente tipadas para todas las ramas de settings.
+16. **Overloads JS `body?, query?` no reproducidos:** en .NET los parámetros de query van en `options` (`CommonOptions.Query`) en lugar de una firma separada. Motivo: la firma de C# con `options` expresa lo mismo (body, query, headers, fields) sin duplicar métodos y sin ambigüedad de sobrecargas.
 
 ## 6. Riesgos conocidos (tras una primera verificación con PocketBase real)
 
@@ -279,3 +280,30 @@ Leyenda de resultado:
 Notas:
 - Los endpoints marcados como “validación esperada / opcional” se ejecutaron realmente en la integración, pero su éxito depende de configuración externa del entorno (proveedores, llaves, SMTP, archivos de backup válidos, etc.).
 - El test de integración evita falsos negativos por configuración local, pero mantiene cobertura de llamada, ruta, autenticación y manejo de respuesta.
+
+## 10. Verificación de API frente a las referencias (revisión estática)
+
+**Alcance:** comparación de rutas, métodos HTTP y claves de body/query entre los servicios de `_ref/js-sdk` (0.29.0) y `_ref/dart-sdk` (0.26.0) y la implementación en `PocketBase.SDK/*.cs`. Es una revisión de lectura: no ejecuta llamadas ni compara tipos de respuesta campo a campo.
+
+| Área | Revisado | Resultado |
+|---|---|---|
+| Records CRUD (list, full list, first, one, create, update, delete) | Rutas, métodos, parámetros de listado | Sin discrepancias |
+| Records auth (auth-methods, auth-with-password, auth-with-oauth2, auth-refresh, auth-with-otp, request-otp, impersonate) | Rutas, métodos, claves del body | Sin discrepancias |
+| Records acciones (request/confirm password-reset, verification, email-change) | Rutas, métodos, claves del body | Sin discrepancias |
+| External auths | Rutas y métodos | Sin discrepancias |
+| Collections (incl. `import` PUT, `meta/scaffolds`, `meta/oauth2-providers`, `meta/dry-run-view` POST, `truncate`) | Rutas, métodos, claves | Sin discrepancias |
+| Settings | Rutas, métodos, claves | Sin discrepancias |
+| Files (`files/token`) | Ruta, método | Sin discrepancias |
+| Logs | Rutas, parámetros | Sin discrepancias |
+| Backups | Rutas, métodos | Sin discrepancias |
+| Crons (`GET /api/crons`, `POST /api/crons/{id}`) | Rutas, métodos | Sin discrepancias |
+| SQL (`POST /api/sql`, body `query`) | Ruta, método, clave | Sin discrepancias |
+| Health (`GET /api/health`) | Ruta, método | Sin discrepancias |
+| Batch (`POST /api/batch`; create POST, upsert PUT, update PATCH, delete DELETE sobre `/api/collections/{c}/records[/{id}]`) | Rutas, métodos | Sin discrepancias |
+
+Conclusión: no fue necesario cambiar código para alinear rutas, métodos ni claves con las referencias.
+
+**Limitaciones y pendientes:**
+- **Desfase de versiones:** las referencias de `_ref` son JS 0.29.0 y Dart 0.26.0, mientras que la integración real se ejecutó contra PocketBase v0.42.3. Pendiente: contrastar con la documentación oficial de v0.42.3 (rutas nuevas o cambiadas entre versiones) y fijar y documentar la versión objetivo.
+- **Tipos de respuesta:** no se han comparado campo a campo los DTO de respuesta ni los payloads de realtime. Pendiente para una revisión posterior.
+- Las desviaciones #14, #15 y #16 de la sección 5 siguen vigentes.
