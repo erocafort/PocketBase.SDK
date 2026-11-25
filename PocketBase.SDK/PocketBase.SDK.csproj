@@ -5,6 +5,7 @@
     <PackageId>PocketBase.SDK</PackageId>
     <Title>PocketBase.SDK</Title>
     <Description>.NET client for PocketBase (core client and services).</Description>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

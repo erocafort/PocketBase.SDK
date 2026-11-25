@@ -1,5 +1,8 @@
 # PocketBase.SDK
 
+[![Publish NuGet](https://github.com/erocafort/PocketBase.SDK/actions/workflows/publish-nuget.yml/badge.svg)](https://github.com/erocafort/PocketBase.SDK/actions/workflows/publish-nuget.yml)
+[![NuGet PocketBase.SDK](https://img.shields.io/nuget/v/PocketBase.SDK.svg)](https://www.nuget.org/packages/PocketBase.SDK)
+
 PocketBase.SDK is a .NET SDK for [PocketBase](https://pocketbase.io/) focused on API parity with the official JS and Dart SDKs.
 
 ## Packages
