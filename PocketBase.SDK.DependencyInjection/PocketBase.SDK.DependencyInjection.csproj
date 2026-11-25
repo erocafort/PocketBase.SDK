@@ -5,7 +5,7 @@
     <PackageId>PocketBase.SDK.DependencyInjection</PackageId>
     <Title>PocketBase.SDK.DependencyInjection</Title>
     <Description>Dependency injection helpers for PocketBase.SDK.</Description>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

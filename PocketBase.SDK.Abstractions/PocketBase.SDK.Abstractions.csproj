@@ -5,7 +5,7 @@
     <PackageId>PocketBase.SDK.Abstractions</PackageId>
     <Title>PocketBase.SDK.Abstractions</Title>
     <Description>Abstractions, DTOs and options for PocketBase.SDK.</Description>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

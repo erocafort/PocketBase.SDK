@@ -44,8 +44,11 @@ public static class ServiceCollectionExtensions
 
         if (string.IsNullOrWhiteSpace(options.BaseUrl))
             throw new InvalidOperationException("PocketBase BaseUrl is required.");
-        if (!Uri.TryCreate(options.BaseUrl, UriKind.Absolute, out _))
-            throw new InvalidOperationException($"PocketBase BaseUrl must be an absolute url: '{options.BaseUrl}'.");
+        if (!Uri.TryCreate(options.BaseUrl, UriKind.Absolute, out var baseUri) ||
+            (baseUri.Scheme != Uri.UriSchemeHttp && baseUri.Scheme != Uri.UriSchemeHttps))
+        {
+            throw new InvalidOperationException($"PocketBase BaseUrl must be an absolute http(s) url: '{options.BaseUrl}'.");
+        }
 
         services.AddSingleton(options);
         services.TryAdd(new ServiceDescriptor(typeof(IAuthStore), typeof(AuthStore), authStoreLifetime));
