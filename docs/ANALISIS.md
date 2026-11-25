@@ -2,7 +2,7 @@
 
 Documento de referencia del proyecto. Mantenerlo actualizado al cerrar cada fase.
 
-- **Última actualización:** 2026-11-25, avance de fase 6: integración live ampliada (roundtrip de cookie auth) y empaquetado NuGet base validado con `dotnet pack`.
+- **Última actualización:** 2026-11-25, cierre de fase 6: integración live opcional + empaquetado NuGet con metadatos finales + publicación por NuGet Trusted Publishing (OIDC).
 - **Estado de verificación:**
   - Tests unitarios con servidores simulados (`HttpMessageHandler` falsos).
   - Test de integración real opcional (`LivePocketBaseIntegrationTests`) ejecutado contra PocketBase v0.42.3 local.
@@ -50,6 +50,8 @@ La solución es `PocketBase.SDK.slnx` (formato .slnx).
 Empaquetado actual:
 - Se generan paquetes para `PocketBase.SDK`, `PocketBase.SDK.Abstractions` y `PocketBase.SDK.DependencyInjection`.
 - `PocketBase.SDK.Realtime` está marcado como no empaquetable (`IsPackable=false`) porque sigue vacío.
+- Publicación automática por tag `v*` vía `.github/workflows/publish-nuget.yml`, usando **NuGet Trusted Publishing (OIDC)** con `NuGet/login@v1` (sin API key persistente).
+- Requisitos de publicación: policy de Trusted Publishing en nuget.org (`owner=erocafort`, `repo=PocketBase.SDK`, `workflow file=publish-nuget.yml`) y variable del repo `NUGET_PUBLISH_USER` (nombre de perfil de nuget.org).
 
 `Directory.Build.props` define:
 - `TargetFrameworks`: net8.0, net9.0, net10.0 y net11.0.
@@ -211,7 +213,7 @@ Pendiente de tipado fino (desviación actual): sub-DTOs de configuración de col
 | 3 | Realtime (SSE), `Subscribe`/`Unsubscribe` en registros, `AuthWithOAuth2Async` | ✅ |
 | 4 | Collections, Settings, Files, Logs, Backups, Crons, SQL, Health (1:1 de métodos con los SDKs) y DTOs principales | ✅ |
 | 5 (propuesta) | Huecos restantes: `autoRefreshThreshold`, cookies del AuthStore, `AsyncAuthStore`, miembros obsoletos del AuthStore, tipado completo de `CollectionModel.Options` (`*Config`) | 🟡 (completado salvo tipado fino `*Config`) |
-| 6 (propuesta) | Pruebas de integración contra un PocketBase v0.42.3 real; empaquetado NuGet | 🟡 integración opcional + empaquetado base listos; pendiente cierre de metadatos finales de publicación |
+| 6 (propuesta) | Pruebas de integración contra un PocketBase v0.42.3 real; empaquetado NuGet | ✅ completada (integración opcional + metadatos de paquete + workflow de publicación por OIDC/Trusted Publishing) |
 
 ## 8. Estado de los tests
 
@@ -223,6 +225,7 @@ Pendiente de tipado fino (desviación actual): sub-DTOs de configuración de col
   - `dotnet test PocketBase.SDK.Tests -f net10.0`
   - `dotnet test PocketBase.SDK.Tests -f net10.0 --filter "FullyQualifiedName~LivePocketBaseIntegrationTests"` (con `PB_URL`, `PB_EMAIL`, `PB_PASSWORD`)
   - `dotnet pack PocketBase.SDK.slnx -c Release`
+  - Publicación CI/CD: tag `v*` con `.github/workflows/publish-nuget.yml` (NuGet Trusted Publishing, sin API keys estáticas)
 
 ## 9. Matriz de integración real por endpoint (PocketBase local)
 
