@@ -221,6 +221,10 @@ Pendiente de tipado fino (desviación actual): sub-DTOs de configuración de col
 - **Última ejecución unitaria:** 96 tests, 0 fallos, ejecutados en net10.0 (incluye cobertura de fase 5).
 - **Última ejecución con integración real opcional:** `LivePocketBaseIntegrationTests` (1 test), 0 fallos, en net10.0. Incluye auth, cookie auth roundtrip (`ExportToCookie`/`LoadFromCookie` + `AuthRefreshAsync`) y cobertura de endpoints fase 4.
 - **Realtime:** batería ejecutada 25 veces seguidas sin fallos, para detectar tests inestables.
+- **Test inestable conocido:** `RealtimeServiceTests.SecondTopic_IsSubmitted_AndSameTopicListener_IsNot` dio un `TimeoutException` una vez en una ejecución completa de la suite. No se ha reproducido en 25 ejecuciones aisladas ni en 8 suites completas. Se han revisado `RealtimeService.SubscribeCoreAsync`, `HandleConnectAsync` e `IsConnectedUnsafe` sin encontrar una causa determinista. El fake (`SseFakes.cs`) ahora informa de las requests recibidas en el timeout, para diagnosticar la próxima vez. El reintento en `publish-nuget.yml` sigue activo hasta tener un diagnóstico.
+- **Test live pendiente en esta sesión:** no hay credenciales `PB_EMAIL`/`PB_PASSWORD` en el entorno, así que `LivePocketBaseIntegrationTests` no se ha vuelto a ejecutar tras el cambio de nombre del paquete.
+- **Git:** `.gitattributes` con `* text=auto eol=lf` elimina los avisos "LF will be replaced by CRLF" (antes causados por `core.autocrlf=true`).
+- **README en NuGet:** la página de 1.0.2 muestra el README anterior (quick start). El nuevo README llegará con la siguiente versión publicada, porque NuGet no admite reutilizar un número de versión.
 - **Comandos:**
   - `dotnet build PocketBase.SDK.slnx`
   - `dotnet test PocketBase.SDK.Tests -f net10.0`
@@ -304,6 +308,6 @@ Notas:
 Conclusión: no fue necesario cambiar código para alinear rutas, métodos ni claves con las referencias.
 
 **Limitaciones y pendientes:**
-- **Desfase de versiones:** las referencias de `_ref` son JS 0.29.0 y Dart 0.26.0, mientras que la integración real se ejecutó contra PocketBase v0.42.3. Pendiente: contrastar con la documentación oficial de v0.42.3 (rutas nuevas o cambiadas entre versiones) y fijar y documentar la versión objetivo.
+- **Desfase de versiones:** las referencias de `_ref` son JS 0.29.0 y Dart 0.26.0, mientras que la integración real se ejecutó contra PocketBase v0.42.3. Pendiente: contrastar con la documentación oficial de v0.42.3 (rutas nuevas o cambiadas entre versiones) y fijar y documentar la versión objetivo. Comprobación parcial del changelog oficial (tramo v0.40.x): la única novedad de API relevante, `DELETE /api/logs` (v0.40.0), ya está cubierta por `Logs.TruncateAsync`. El resto del tramo 0.29→0.42 no se ha revisado.
 - **Tipos de respuesta:** no se han comparado campo a campo los DTO de respuesta ni los payloads de realtime. Pendiente para una revisión posterior.
 - Las desviaciones #14, #15 y #16 de la sección 5 siguen vigentes.

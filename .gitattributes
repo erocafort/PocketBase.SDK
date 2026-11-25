@@ -1,0 +1,11 @@
+# Normalize text files to LF in the repository (the index already stores LF).
+# Checked out with LF too, so Windows core.autocrlf does not rewrite them (avoids "LF will be replaced by CRLF" warnings).
+* text=auto eol=lf
+
+# Binary files must never be normalized.
+*.png binary
+*.jpg binary
+*.ico binary
+*.nupkg binary
+*.snk binary
+*.dll binary

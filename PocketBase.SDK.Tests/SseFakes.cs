@@ -80,11 +80,43 @@ internal sealed class SseFakeHandler : HttpMessageHandler
 
     public Func<HttpRequestMessage, string?, (HttpStatusCode Status, string Body)>? Responder { get; set; }
 
-    public async Task<SseTestStream> NextConnectionAsync() =>
-        await _connections.Reader.ReadAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
+    private static readonly TimeSpan NextTimeout = TimeSpan.FromSeconds(10);
 
-    public async Task<(HttpRequestMessage Request, string Body)> NextSubscriptionsPostAsync() =>
-        await _posts.Reader.ReadAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
+    public async Task<SseTestStream> NextConnectionAsync()
+    {
+        using var cts = new CancellationTokenSource(NextTimeout);
+        try
+        {
+            return await _connections.Reader.ReadAsync(cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            throw new TimeoutException($"No GET /api/realtime within {NextTimeout.TotalSeconds}s. Requests so far: {DescribeRequests()}");
+        }
+    }
+
+    public async Task<(HttpRequestMessage Request, string Body)> NextSubscriptionsPostAsync()
+    {
+        using var cts = new CancellationTokenSource(NextTimeout);
+        try
+        {
+            return await _posts.Reader.ReadAsync(cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            throw new TimeoutException($"No POST /api/realtime within {NextTimeout.TotalSeconds}s. Requests so far: {DescribeRequests()}");
+        }
+    }
+
+    private string DescribeRequests()
+    {
+        lock (Requests)
+        {
+            return Requests.Count == 0
+                ? "(none)"
+                : string.Join("; ", Requests.Select(r => $"{r.Request.Method} {r.Request.RequestUri?.AbsolutePath}" + (r.Body is null ? "" : $" body={r.Body}")));
+        }
+    }
 
     public bool HasPendingSubscriptionsPost => _posts.Reader.TryPeek(out _);
 
